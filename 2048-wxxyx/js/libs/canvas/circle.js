@@ -23,6 +23,9 @@ export default class Circle extends Shape {
    * @return void
    */
   draw (ctx) {
+    if (!this.visible) {
+      return;
+    }
     const { centre, radius, fillColor = '#000000' } = this.config;
     const { x, y } = centre;
 

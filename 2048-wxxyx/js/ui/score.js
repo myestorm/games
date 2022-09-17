@@ -36,7 +36,9 @@ export default class Score extends Group {
       },
       width: this.config.width,
       height: 24,
-      font: `14px ${fonts.Bold}`,
+      // font: `14px ${fonts.Bold}`,
+      fontSize: 14,
+      fontFamily: fonts.Bold,
       color: '#f0e4d9',
       text: this.config.label
     });
@@ -48,7 +50,9 @@ export default class Score extends Group {
       },
       width: this.config.width,
       height: this.config.height - 24,
-      font: `24px ${fonts.Bold}`,
+      // font: `24px ${fonts.Bold}`,
+      fontSize: 24,
+      fontFamily: fonts.Bold,
       color: '#ffffff',
       text: this.config.score
     });

@@ -20,6 +20,9 @@ export default class Rect extends Shape {
   }
 
   draw (ctx) {
+    if (!this.visible) {
+      return;
+    }
     const { leftTop, width, height, background = '#000000', borderRadius = 0, borderColor = '#000000', borderWidth = 0 } = this.config;
     const { x, y } = leftTop;
 

@@ -18,6 +18,9 @@ export default class Group extends Shape {
   }
 
   draw (ctx) {
+    if (!this.visible) {
+      return;
+    }
     const { leftTop, width, height, background = 'rgba(255,255,255,0)' } = this.config;
     const { x, y } = leftTop;
 

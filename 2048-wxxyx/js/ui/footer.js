@@ -28,7 +28,9 @@ export default class Footer extends Group {
         y: 0,
       },
       width: imgWidth,
-      height: imgHeight
+      height: imgHeight,
+      oWidth: 360,
+      oHeight: 240,
     });
     this.add(logo);
 
@@ -39,7 +41,9 @@ export default class Footer extends Group {
       },
       width: groupWidth,
       height: 40,
-      font: `12px ${fonts.Light}`,
+      // font: `12px ${fonts.Light}`,
+      fontSize: 12,
+      fontFamily: fonts.Light,
       color: '#927963',
       text: 'totonoo studio 2022'
     });

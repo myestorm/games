@@ -36,6 +36,8 @@ export default class ToggleButton extends Group {
       },
       width: size,
       height: size,
+      oWidth: 32,
+      oHeight: 32,
       src: 'images/icon/sound_on.png'
     });
 
@@ -46,6 +48,8 @@ export default class ToggleButton extends Group {
       },
       width: size,
       height: size,
+      oWidth: 32,
+      oHeight: 32,
       src: 'images/icon/sound_off.png'
     });
 

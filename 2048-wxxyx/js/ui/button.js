@@ -35,7 +35,8 @@ export default class Button extends Group {
       },
       width: this.config.width,
       height: this.config.height,
-      font: `16px ${fonts.Bold}`,
+      fontSize: 16,
+      fontFamily: fonts.Bold,
       color: '#ffffff',
       text: this.config.label
     });

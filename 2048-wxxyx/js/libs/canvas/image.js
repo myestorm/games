@@ -10,12 +10,14 @@ export default class CanvasImage extends Shape {
    * @param {number} props.width 宽
    * @param {number} props.height 高
    * @param {string} props.src 图片地址
+   * @param {string} props.oWidth 原图宽度
+   * @param {string} props.oHeight 原图高度
    */
   constructor (props) {
     super();
     this.config = props;
 
-    const { leftTop, width, height, src } = this.config;
+    let { leftTop, width, height, src, oWidth, oHeight } = this.config;
     const { x, y } = leftTop;
 
     this.img = new Image();
@@ -23,6 +25,14 @@ export default class CanvasImage extends Shape {
 
     this.width = width;
     this.height = height;
+
+    if (!oWidth) {
+      this.config.oWidth = oWidth = this.width;
+    }
+
+    if (!oHeight) {
+      this.config.oHeight = oHeight = this.height;
+    }
 
     this.x = x;
     this.y = y;
@@ -32,18 +42,34 @@ export default class CanvasImage extends Shape {
     if (!this.visible) {
       return;
     }
-    const { leftTop, width, height } = this.config;
+    const { leftTop, width, height, oWidth, oHeight } = this.config;
     const { x, y } = leftTop;
 
     ctx.save();
 
-    ctx.drawImage(
-      this.img,
-      x,
-      y,
-      width,
-      height
-    );
+    const imgRatio = oWidth / oHeight;
+    const canvasRatio = width / height;
+    let sw, sh, sx, sy;
+    if (imgRatio <= canvasRatio){
+      sw = oWidth;
+      sh = sw / canvasRatio;
+      sx = 0
+      sy = (oHeight - sh) / 2
+    } else {
+      sh = oHeight;
+      sw = sh * canvasRatio;
+      sx = (oWidth - sw) / 2;
+      sy = 0;
+    } 
+    ctx.drawImage(this.img, sx, sy, sw, sh, x, y, width, height);
+
+    // ctx.drawImage(
+    //   this.img,
+    //   x,
+    //   y,
+    //   width,
+    //   height
+    // );
 
     ctx.restore(); 
   }

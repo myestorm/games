@@ -12,7 +12,9 @@ export default class BackGround extends Image {
         y: 0,
       },
       width: screenWidth,
-      height: screenHeight
+      height: screenHeight,
+      oWidth: 750,
+      oHeight: 1334,
     });
   }
 };

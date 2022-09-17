@@ -1,15 +1,5 @@
 import Event from './event';
-import Hammer from './hammer'
-
-const eventList = [
-  'tap',
-  'doubletap',
-  'swipe',
-  'swipeleft',
-  'swiperight',
-  'swipeup',
-  'swipedown',
-];
+import AlloyFinger from './alloyFinger';
 
 export default class Canvas extends Event {
   canvas = null;
@@ -27,11 +17,6 @@ export default class Canvas extends Event {
     this.ctx = this.canvas.getContext('2d');
     this.shapes = [];
 
-    const hammer = new Hammer(canvas);
-    hammer.on('doubletap', function(ev) {
-      console.log('doubletap', ev);
-    });
-
     this.bindEvents();
   }
 
@@ -42,14 +27,14 @@ export default class Canvas extends Event {
    * @return void
    */
   bindEvents () {
-    // eventList.map(eventName => {
-    //   this.canvas.addEventListener(eventName, this.handleEvent(eventName));
-    // });
-    const hammer = new Hammer(this.canvas);
-    eventList.map(eventName => {
-      hammer.on(eventName, this.handleEvent(eventName));
-      return eventName;
-    });
+    new AlloyFinger(this.canvas, {
+      tap: (event) => {
+        this.handleEvent('tap')(event);
+      },
+      swipe: (event) => {
+        this.handleEvent('swipe' + event.direction.toLowerCase())(event);
+      }
+    })
   }
 
   /**
@@ -63,9 +48,10 @@ export default class Canvas extends Event {
    * { point: {x: 0, y: 0}, _oriEvent: event }
    */
   newEvent (event) {
+    const touches = event.changedTouches;
     const point = {
-      x: event.offsetX || event.pointers[0].clientX,
-      y: event.offsetY || event.pointers[0].clientY
+      x: event.offsetX || touches[0].clientX,
+      y: event.offsetY || touches[0].clientY
     };
     return {
       point,
@@ -79,8 +65,8 @@ export default class Canvas extends Event {
    * @returns {(event) => {}}
    */
   handleEvent = (name) => (event) => {
-    const pointers = event.pointers;
-    if (pointers.length === 0) {
+    const touches = event.changedTouches;
+    if (touches.length === 0) {
       return;
     }
     const myEvent = this.newEvent(event);
@@ -89,7 +75,6 @@ export default class Canvas extends Event {
       .map(shape => {
         shape.emit(name, myEvent)
       }); // 向下分发事件
-    
     this.emit(name, myEvent); // canvas的事件
   }
 
